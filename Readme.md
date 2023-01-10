@@ -36,7 +36,7 @@ Response
 
 200 on success.
 400 Bad Request if the request body is missing one of the required fields or the email is already exist.
-'''
+```
 {
     "id": "3",
     "name": "Bob",
@@ -44,7 +44,7 @@ Response
     "email": "bob@example.com"
 }
 
-'''
+```
 
 
 ## GET /people/:id
@@ -59,13 +59,13 @@ Response
 200 OK on success.
 404 Not Found if the person with the given ID does not exist.
 
-'''
+```
 {
     "id": "1",
     "name": "John Doe",
     "email": "johndoe@example.com"
 }
-'''
+```
 
 ## PUT /people/:id
 
