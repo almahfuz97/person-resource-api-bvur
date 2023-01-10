@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
     const newPerson = new Person(personInfo)
     await newPerson.save((err) => {
         if (err) {
-            res.json({ message: err.message })
+            res.status(400).json({ message: err.message })
         }
         else {
             res.status(200).json({ message: 'Person added successfully' })
