@@ -7,13 +7,29 @@ const Person = new mongoose.model('Person', peopleSchema)
 
 // GET ALL PEOPLE
 router.get('/', async (req, res) => {
-    // new Person().
+    await Person.find({}, (err, data) => {
+        if (err) {
+            res.json({ message: err.message })
+        }
+        else {
+            res.status(200).json({ data: data })
+
+        }
+    }).clone()
 
 })
 
 // GET a Person
 router.get('/:id', async (req, res) => {
+    await Person.findOne({ id: req.params.id }, (err, data) => {
+        if (err) {
+            res.json({ message: err.message })
+        }
+        else {
+            res.status(200).json({ data: data })
 
+        }
+    }).clone()
 })
 
 // add a new Person
@@ -27,10 +43,9 @@ router.post('/', async (req, res) => {
     }
 
     const newPerson = new Person(personInfo)
-
     await newPerson.save((err) => {
         if (err) {
-            res.status(500).json({ message: err.message })
+            res.json({ message: err.message })
         }
         else {
             res.status(200).json({ message: 'Person added successfully' })
@@ -41,8 +56,6 @@ router.post('/', async (req, res) => {
 
 // update a  Person
 router.put('/:id', async (req, res) => {
-
-    console.log(req.params.id)
     delete req.body.email;
     await Person.findOneAndUpdate({ id: req.params.id }, {
         $set: {
@@ -64,6 +77,15 @@ router.put('/:id', async (req, res) => {
 
 // delete a  Person
 router.delete('/:id', async (req, res) => {
+    await Person.deleteOne({ id: req.params.id }, (err) => {
+        if (err) {
+            res.status(500).json({ message: err.message })
+        }
+        else {
+            res.status(200).json({ message: 'Person deleted successfully' })
+
+        }
+    }).clone()
 
 })
 
